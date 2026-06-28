@@ -2,13 +2,11 @@
 
 This repository contains a PyTorch implementation of **TopoGate**, a topology-guided gated fusion framework for binary or seven-class liver lesion classification from multi-phase MRI.
 
-This version intentionally uses only:
+We use:
 
 - deep image features from multi-phase MRI volumes,
 - sliding-band topological features with bandwidth `w20`,
 - sliding-band topological features with bandwidth `w40`.
-
-Radiomics and signed-distance features have been removed from this cleaned version.
 
 ## Model overview
 
@@ -126,7 +124,7 @@ python topogate_topology_only.py \
   --setting binary \
   --phase_mode allphase \
   --backbone r2plus1d_18 \
-  --seeds 42 43 44 45 46 \
+  --seeds 1 2 3 4 5 \
   --train_manifest data/train_manifest.csv \
   --val_manifest data/val_manifest.csv \
   --test_manifest data/test_manifest.csv \
@@ -171,13 +169,4 @@ For each run, the script saves:
 - feature manifest JSON,
 - final results CSV.
 
-## Notes
 
-- The cleaned script removes all radiomics and signed-distance options and feature-loading blocks.
-- The only optional auxiliary sources are `w20` and `w40` topology features.
-- The image embedding is included in the modality-attention fusion together with gated topology embeddings.
-- The final fused representation is computed using residual normalization:
-
-```text
-LayerNorm(fused_representation + image_embedding)
-```
